@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Telosys Database Repository --><root>
+<tableList databaseId="0" databaseName="MYSQL" databaseProductName="MySQL" generation="2018-09-26 16:31:11">
+<table catalog="flight_booking" databaseType="TABLE" javaBean="Airports" name="airports" schema="">
+<column dbAutoIncremented="true" dbComment="" dbDefaultValue="" dbName="airport_code" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="airportCode" javaType="java.lang.Integer" jdbcTypeCode="4" label="Airport code" notNull="true" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="airport_name" dbNotNull="false" dbPosition="2" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="airportName" javaType="java.lang.String" jdbcTypeCode="12" label="Airport name" maxLength="255" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="airport_location" dbNotNull="false" dbPosition="3" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="airportLocation" javaType="java.lang.String" jdbcTypeCode="12" label="Airport location" maxLength="255" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="other_details" dbNotNull="false" dbPosition="4" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="otherDetails" javaType="java.lang.String" jdbcTypeCode="12" label="Other details" maxLength="255" notNull="false" selected="true"/>
+<link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="fk_legs_airports1" id="LINK_FK_fk_legs_airports1_I" inverseSideOf="LINK_FK_fk_legs_airports1_O" javaName="listOfLegs" javaType="java.util.List" joinTableName="" mappedBy="airports" optional="" owningSide="false" sourceTableName="airports" targetEntity="Legs" targetTableName="legs" used="true"/>
+<link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="fk_flight_schedules_airports1" id="LINK_FK_fk_flight_schedules_airports1_I" inverseSideOf="LINK_FK_fk_flight_schedules_airports1_O" javaName="listOfFlightSchedules" javaType="java.util.List" joinTableName="" mappedBy="airports" optional="" owningSide="false" sourceTableName="airports" targetEntity="FlightSchedules" targetTableName="flight_schedules" used="true"/>
+</table>
+<table catalog="flight_booking" databaseType="TABLE" javaBean="BookingAgents" name="booking_agents" schema="">
+<column dbAutoIncremented="true" dbComment="" dbDefaultValue="" dbName="agent_id" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="agentId" javaType="java.lang.Integer" jdbcTypeCode="4" label="Agent id" notNull="true" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="agent_name" dbNotNull="false" dbPosition="2" dbSize="225" dbTypeName="VARCHAR" inputType="text" javaName="agentName" javaType="java.lang.String" jdbcTypeCode="12" label="Agent name" maxLength="225" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="agent_details" dbNotNull="false" dbPosition="3" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="agentDetails" javaType="java.lang.String" jdbcTypeCode="12" label="Agent details" maxLength="255" notNull="false" selected="true"/>
+<link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="fk_ltinerary_reservations_booking_agents1" id="LINK_FK_fk_ltinerary_reservations_booking_agents1_I" inverseSideOf="LINK_FK_fk_ltinerary_reservations_booking_agents1_O" javaName="listOfLtineraryReservations" javaType="java.util.List" joinTableName="" mappedBy="bookingAgents" optional="" owningSide="false" sourceTableName="booking_agents" targetEntity="LtineraryReservations" targetTableName="ltinerary_reservations" used="true"/>
+</table>
+<table catalog="flight_booking" databaseType="TABLE" javaBean="FlightCosts" name="flight_costs" schema="">
+<column dbAutoIncremented="true" dbComment="" dbDefaultValue="" dbName="flight_number" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="flightNumber" javaType="java.lang.Integer" jdbcTypeCode="4" label="Flight number" notNull="true" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="aircraft_type_code" dbNotNull="false" dbPosition="2" dbSize="10" dbTypeName="INT" inputType="number" javaName="aircraftTypeCode" javaType="java.lang.Integer" jdbcTypeCode="4" label="Aircraft type code" notNull="false" selected="true"/>
+<column dateType="DT" dbComment="" dbDefaultValue="" dbName="valid_from_date" dbNotNull="false" dbPosition="3" dbSize="19" dbTypeName="DATETIME" inputType="" javaName="validFromDate" javaType="java.util.Date" jdbcTypeCode="93" label="Valid from date" notNull="false" selected="true"/>
+<column dateType="DT" dbComment="" dbDefaultValue="" dbName="valid_to_date" dbNotNull="false" dbPosition="4" dbSize="19" dbTypeName="DATETIME" inputType="" javaName="validToDate" javaType="java.util.Date" jdbcTypeCode="93" label="Valid to date" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="flight_cost" dbNotNull="false" dbPosition="5" dbSize="10" dbTypeName="INT" inputType="number" javaName="flightCost" javaType="java.lang.Integer" jdbcTypeCode="4" label="Flight cost" notNull="false" selected="true"/>
+<fk name="fk_flight_costs_flight_schedules1">
+<fkcol colname="flight_number" colref="flight_number" deferrable="7" deleterule="3" sequence="1" tablename="flight_costs" tableref="flight_schedules" updaterule="3"/>
+</fk>
+<fk name="fk_flight_costs_ref_calendar1">
+<fkcol colname="valid_to_date" colref="day_date" deferrable="7" deleterule="3" sequence="1" tablename="flight_costs" tableref="ref_calendar" updaterule="3"/>
+</fk>
+<link cardinality="ManyToOne" cascade="" fetch="DEFAULT" foreignKeyName="fk_flight_costs_ref_calendar1" id="LINK_FK_fk_flight_costs_ref_calendar1_O" inverseSideOf="" javaName="refCalendar" javaType="RefCalendar" joinTableName="" mappedBy="" optional="" owningSide="true" sourceTableName="flight_costs" targetEntity="RefCalendar" targetTableName="ref_calendar" used="true">
+<joinColumns>
+<joinColumn insertable="false" name="valid_to_date" nullable="true" referencedColumnName="day_date" unique="false" updatable="false"/>
+</joinColumns>
+</link>
+<link cardinality="ManyToOne" cascade="" fetch="DEFAULT" foreignKeyName="fk_flight_costs_flight_schedules1" id="LINK_FK_fk_flight_costs_flight_schedules1_O" inverseSideOf="" javaName="flightSchedules" javaType="FlightSchedules" joinTableName="" mappedBy="" optional="" owningSide="true" sourceTableName="flight_costs" targetEntity="FlightSchedules" targetTableName="flight_schedules" used="true">
+<joinColumns>
+<joinColumn insertable="false" name="flight_number" nullable="true" referencedColumnName="flight_number" unique="false" updatable="false"/>
+</joinColumns>
+</link>
+</table>
+<table catalog="flight_booking" databaseType="TABLE" javaBean="FlightSchedules" name="flight_schedules" schema="">
+<column dbAutoIncremented="true" dbComment="" dbDefaultValue="" dbName="flight_number" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="flightNumber" javaType="java.lang.Integer" jdbcTypeCode="4" label="Flight number" notNull="true" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="airline_code" dbNotNull="false" dbPosition="2" dbSize="10" dbTypeName="INT" inputType="number" javaName="airlineCode" javaType="java.lang.Integer" jdbcTypeCode="4" label="Airline code" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="usual_aircraft_type_code" dbNotNull="false" dbPosition="3" dbSize="10" dbTypeName="INT" inputType="number" javaName="usualAircraftTypeCode" javaType="java.lang.Integer" jdbcTypeCode="4" label="Usual aircraft type code" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="origin_airport_code" dbNotNull="false" dbPosition="4" dbSize="10" dbTypeName="INT" inputType="number" javaName="originAirportCode" javaType="java.lang.Integer" jdbcTypeCode="4" label="Origin airport code" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="destination_airport_code" dbNotNull="false" dbPosition="5" dbSize="10" dbTypeName="INT" inputType="number" javaName="destinationAirportCode" javaType="java.lang.Integer" jdbcTypeCode="4" label="Destination airport code" notNull="false" selected="true"/>
+<column dateType="DT" dbComment="" dbDefaultValue="" dbName="departure_date_time" dbNotNull="false" dbPosition="6" dbSize="19" dbTypeName="DATETIME" inputType="" javaName="departureDateTime" javaType="java.util.Date" jdbcTypeCode="93" label="Departure date time" notNull="false" selected="true"/>
+<column dateType="DT" dbComment="" dbDefaultValue="" dbName="arrival_date_time" dbNotNull="false" dbPosition="7" dbSize="19" dbTypeName="DATETIME" inputType="" javaName="arrivalDateTime" javaType="java.util.Date" jdbcTypeCode="93" label="Arrival date time" notNull="false" selected="true"/>
+<fk name="fk_flight_schedules_airports1">
+<fkcol colname="airline_code" colref="airport_code" deferrable="7" deleterule="3" sequence="1" tablename="flight_schedules" tableref="airports" updaterule="3"/>
+</fk>
+<link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="fk_flight_costs_flight_schedules1" id="LINK_FK_fk_flight_costs_flight_schedules1_I" inverseSideOf="LINK_FK_fk_flight_costs_flight_schedules1_O" javaName="listOfFlightCosts" javaType="java.util.List" joinTableName="" mappedBy="flightSchedules" optional="" owningSide="false" sourceTableName="flight_schedules" targetEntity="FlightCosts" targetTableName="flight_costs" used="true"/>
+<link cardinality="ManyToOne" cascade="" fetch="DEFAULT" foreignKeyName="fk_flight_schedules_airports1" id="LINK_FK_fk_flight_schedules_airports1_O" inverseSideOf="" javaName="airports" javaType="Airports" joinTableName="" mappedBy="" optional="" owningSide="true" sourceTableName="flight_schedules" targetEntity="Airports" targetTableName="airports" used="true">
+<joinColumns>
+<joinColumn insertable="false" name="airline_code" nullable="true" referencedColumnName="airport_code" unique="false" updatable="false"/>
+</joinColumns>
+</link>
+<link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="fk_legs_flight_schedules1" id="LINK_FK_fk_legs_flight_schedules1_I" inverseSideOf="LINK_FK_fk_legs_flight_schedules1_O" javaName="listOfLegs" javaType="java.util.List" joinTableName="" mappedBy="flightSchedules" optional="" owningSide="false" sourceTableName="flight_schedules" targetEntity="Legs" targetTableName="legs" used="true"/>
+</table>
+<table catalog="flight_booking" databaseType="TABLE" javaBean="Legs" name="legs" schema="">
+<column dbAutoIncremented="true" dbComment="" dbDefaultValue="" dbName="leg_id" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="legId" javaType="java.lang.Integer" jdbcTypeCode="4" label="Leg id" notNull="true" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="flight_number" dbNotNull="false" dbPosition="2" dbSize="10" dbTypeName="INT" inputType="number" javaName="flightNumber" javaType="java.lang.Integer" jdbcTypeCode="4" label="Flight number" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="origin_airport_code" dbNotNull="false" dbPosition="3" dbSize="10" dbTypeName="INT" inputType="number" javaName="originAirportCode" javaType="java.lang.Integer" jdbcTypeCode="4" label="Origin airport code" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="destination_airport_code" dbNotNull="false" dbPosition="4" dbSize="10" dbTypeName="INT" inputType="number" javaName="destinationAirportCode" javaType="java.lang.Integer" jdbcTypeCode="4" label="Destination airport code" notNull="false" selected="true"/>
+<column dateType="DT" dbComment="" dbDefaultValue="" dbName="actual_departure_time" dbNotNull="false" dbPosition="5" dbSize="19" dbTypeName="DATETIME" inputType="" javaName="actualDepartureTime" javaType="java.util.Date" jdbcTypeCode="93" label="Actual departure time" notNull="false" selected="true"/>
+<column dateType="DT" dbComment="" dbDefaultValue="" dbName="actual_arrival_time" dbNotNull="false" dbPosition="6" dbSize="19" dbTypeName="DATETIME" inputType="" javaName="actualArrivalTime" javaType="java.util.Date" jdbcTypeCode="93" label="Actual arrival time" notNull="false" selected="true"/>
+<fk name="fk_legs_airports1">
+<fkcol colname="origin_airport_code" colref="airport_code" deferrable="7" deleterule="3" sequence="1" tablename="legs" tableref="airports" updaterule="3"/>
+</fk>
+<fk name="fk_legs_flight_schedules1">
+<fkcol colname="flight_number" colref="flight_number" deferrable="7" deleterule="3" sequence="1" tablename="legs" tableref="flight_schedules" updaterule="3"/>
+</fk>
+<link cardinality="ManyToMany" cascade="" fetch="DEFAULT" foreignKeyName="" id="LINK_JT_ltinerary_legs_O" inverseSideOf="" javaName="listOfLtineraryReservations" javaType="java.util.List" joinTableName="ltinerary_legs" mappedBy="" optional="" owningSide="true" sourceTableName="legs" targetEntity="LtineraryReservations" targetTableName="ltinerary_reservations" used="true">
+<joinTable name="ltinerary_legs">
+<joinColumns>
+<joinColumn insertable="false" name="leg_id" nullable="true" referencedColumnName="leg_id" unique="false" updatable="false"/>
+</joinColumns>
+<inverseJoinColumns>
+<joinColumn insertable="false" name="reservation_id" nullable="true" referencedColumnName="reservation_id" unique="false" updatable="false"/>
+</inverseJoinColumns>
+</joinTable>
+</link>
+<link cardinality="ManyToOne" cascade="" fetch="DEFAULT" foreignKeyName="fk_legs_flight_schedules1" id="LINK_FK_fk_legs_flight_schedules1_O" inverseSideOf="" javaName="flightSchedules" javaType="FlightSchedules" joinTableName="" mappedBy="" optional="" owningSide="true" sourceTableName="legs" targetEntity="FlightSchedules" targetTableName="flight_schedules" used="true">
+<joinColumns>
+<joinColumn insertable="false" name="flight_number" nullable="true" referencedColumnName="flight_number" unique="false" updatable="false"/>
+</joinColumns>
+</link>
+<link cardinality="ManyToOne" cascade="" fetch="DEFAULT" foreignKeyName="fk_legs_airports1" id="LINK_FK_fk_legs_airports1_O" inverseSideOf="" javaName="airports" javaType="Airports" joinTableName="" mappedBy="" optional="" owningSide="true" sourceTableName="legs" targetEntity="Airports" targetTableName="airports" used="true">
+<joinColumns>
+<joinColumn insertable="false" name="origin_airport_code" nullable="true" referencedColumnName="airport_code" unique="false" updatable="false"/>
+</joinColumns>
+</link>
+</table>
+<table catalog="flight_booking" databaseType="TABLE" javaBean="LtineraryLegs" name="ltinerary_legs" schema="">
+<column dbComment="" dbDefaultValue="" dbName="reservation_id" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="reservationId" javaType="java.lang.Integer" jdbcTypeCode="4" label="Reservation id" notNull="true" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="leg_id" dbNotNull="true" dbPosition="2" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="legId" javaType="java.lang.Integer" jdbcTypeCode="4" label="Leg id" notNull="true" selected="true"/>
+<fk name="fk_ltinerary_legs_legs1">
+<fkcol colname="leg_id" colref="leg_id" deferrable="7" deleterule="3" sequence="1" tablename="ltinerary_legs" tableref="legs" updaterule="3"/>
+</fk>
+<fk name="fk_ltinerary_legs_ltinerary_reservations1">
+<fkcol colname="reservation_id" colref="reservation_id" deferrable="7" deleterule="3" sequence="1" tablename="ltinerary_legs" tableref="ltinerary_reservations" updaterule="3"/>
+</fk>
+</table>
+<table catalog="flight_booking" databaseType="TABLE" javaBean="LtineraryReservations" name="ltinerary_reservations" schema="">
+<column dbAutoIncremented="true" dbComment="" dbDefaultValue="" dbName="reservation_id" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="reservationId" javaType="java.lang.Integer" jdbcTypeCode="4" label="Reservation id" notNull="true" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="agent_id" dbNotNull="true" dbPosition="2" dbSize="10" dbTypeName="INT" inputType="number" javaName="agentId" javaType="java.lang.Integer" jdbcTypeCode="4" label="Agent id" notNull="true" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="passenger_id" dbNotNull="true" dbPosition="3" dbSize="10" dbTypeName="INT" inputType="number" javaName="passengerId" javaType="java.lang.Integer" jdbcTypeCode="4" label="Passenger id" notNull="true" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="reservatiion_status_code" dbNotNull="false" dbPosition="4" dbSize="10" dbTypeName="INT" inputType="number" javaName="reservatiionStatusCode" javaType="java.lang.Integer" jdbcTypeCode="4" label="Reservatiion status code" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="ticket_type_code" dbNotNull="false" dbPosition="5" dbSize="10" dbTypeName="INT" inputType="number" javaName="ticketTypeCode" javaType="java.lang.Integer" jdbcTypeCode="4" label="Ticket type code" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="travel_class_code" dbNotNull="false" dbPosition="6" dbSize="10" dbTypeName="INT" inputType="number" javaName="travelClassCode" javaType="java.lang.Integer" jdbcTypeCode="4" label="Travel class code" notNull="false" selected="true"/>
+<column dateType="DT" dbComment="" dbDefaultValue="" dbName="date_reservation_made" dbNotNull="false" dbPosition="7" dbSize="19" dbTypeName="DATETIME" inputType="" javaName="dateReservationMade" javaType="java.util.Date" jdbcTypeCode="93" label="Date reservation made" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="number_in_party" dbNotNull="false" dbPosition="8" dbSize="10" dbTypeName="INT" inputType="number" javaName="numberInParty" javaType="java.lang.Integer" jdbcTypeCode="4" label="Number in party" notNull="false" selected="true"/>
+<fk name="fk_ltinerary_reservations_booking_agents1">
+<fkcol colname="agent_id" colref="agent_id" deferrable="7" deleterule="3" sequence="1" tablename="ltinerary_reservations" tableref="booking_agents" updaterule="3"/>
+</fk>
+<fk name="fk_ltinerary_reservations_passengers1">
+<fkcol colname="passenger_id" colref="passenger_id" deferrable="7" deleterule="3" sequence="1" tablename="ltinerary_reservations" tableref="passengers" updaterule="3"/>
+</fk>
+<link cardinality="ManyToMany" cascade="" fetch="DEFAULT" foreignKeyName="" id="LINK_JT_reservation_payments_O" inverseSideOf="" javaName="listOfPayments" javaType="java.util.List" joinTableName="reservation_payments" mappedBy="" optional="" owningSide="true" sourceTableName="ltinerary_reservations" targetEntity="Payments" targetTableName="payments" used="true">
+<joinTable name="reservation_payments">
+<joinColumns>
+<joinColumn insertable="false" name="payment_id" nullable="true" referencedColumnName="reservation_id" unique="false" updatable="false"/>
+</joinColumns>
+<inverseJoinColumns>
+<joinColumn insertable="false" name="reservation_id" nullable="true" referencedColumnName="payment_id" unique="false" updatable="false"/>
+</inverseJoinColumns>
+</joinTable>
+</link>
+<link cardinality="ManyToOne" cascade="" fetch="DEFAULT" foreignKeyName="fk_ltinerary_reservations_booking_agents1" id="LINK_FK_fk_ltinerary_reservations_booking_agents1_O" inverseSideOf="" javaName="bookingAgents" javaType="BookingAgents" joinTableName="" mappedBy="" optional="" owningSide="true" sourceTableName="ltinerary_reservations" targetEntity="BookingAgents" targetTableName="booking_agents" used="true">
+<joinColumns>
+<joinColumn insertable="false" name="agent_id" nullable="true" referencedColumnName="agent_id" unique="false" updatable="false"/>
+</joinColumns>
+</link>
+<link cardinality="ManyToOne" cascade="" fetch="DEFAULT" foreignKeyName="fk_ltinerary_reservations_passengers1" id="LINK_FK_fk_ltinerary_reservations_passengers1_O" inverseSideOf="" javaName="passengers" javaType="Passengers" joinTableName="" mappedBy="" optional="" owningSide="true" sourceTableName="ltinerary_reservations" targetEntity="Passengers" targetTableName="passengers" used="true">
+<joinColumns>
+<joinColumn insertable="false" name="passenger_id" nullable="true" referencedColumnName="passenger_id" unique="false" updatable="false"/>
+</joinColumns>
+</link>
+<link cardinality="ManyToMany" cascade="" fetch="DEFAULT" foreignKeyName="" id="LINK_JT_ltinerary_legs_I" inverseSideOf="LINK_JT_ltinerary_legs_O" javaName="listOfLegs" javaType="java.util.List" joinTableName="ltinerary_legs" mappedBy="listOfLtineraryReservations" optional="" owningSide="false" sourceTableName="ltinerary_reservations" targetEntity="Legs" targetTableName="legs" used="true"/>
+</table>
+<table catalog="flight_booking" databaseType="TABLE" javaBean="Passengers" name="passengers" schema="">
+<column dbAutoIncremented="true" dbComment="" dbDefaultValue="" dbName="passenger_id" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="passengerId" javaType="java.lang.Integer" jdbcTypeCode="4" label="Passenger id" notNull="true" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="first_name" dbNotNull="false" dbPosition="2" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="firstName" javaType="java.lang.String" jdbcTypeCode="12" label="First name" maxLength="255" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="second_name" dbNotNull="false" dbPosition="3" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="secondName" javaType="java.lang.String" jdbcTypeCode="12" label="Second name" maxLength="255" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="last_name" dbNotNull="false" dbPosition="4" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="lastName" javaType="java.lang.String" jdbcTypeCode="12" label="Last name" maxLength="255" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="phone_number" dbNotNull="false" dbPosition="5" dbSize="10" dbTypeName="INT" inputType="number" javaName="phoneNumber" javaType="java.lang.Integer" jdbcTypeCode="4" label="Phone number" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="email_address" dbNotNull="false" dbPosition="6" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="emailAddress" javaType="java.lang.String" jdbcTypeCode="12" label="Email address" maxLength="255" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="address_lines" dbNotNull="false" dbPosition="7" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="addressLines" javaType="java.lang.String" jdbcTypeCode="12" label="Address lines" maxLength="255" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="city" dbNotNull="false" dbPosition="8" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="city" javaType="java.lang.String" jdbcTypeCode="12" label="City" maxLength="255" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="stat_province_country" dbNotNull="false" dbPosition="9" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="statProvinceCountry" javaType="java.lang.String" jdbcTypeCode="12" label="Stat province country" maxLength="255" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="country" dbNotNull="false" dbPosition="10" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="country" javaType="java.lang.String" jdbcTypeCode="12" label="Country" maxLength="255" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="other_passenger_details" dbNotNull="false" dbPosition="11" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="otherPassengerDetails" javaType="java.lang.String" jdbcTypeCode="12" label="Other passenger details" maxLength="255" notNull="false" selected="true"/>
+<link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="fk_ltinerary_reservations_passengers1" id="LINK_FK_fk_ltinerary_reservations_passengers1_I" inverseSideOf="LINK_FK_fk_ltinerary_reservations_passengers1_O" javaName="listOfLtineraryReservations" javaType="java.util.List" joinTableName="" mappedBy="passengers" optional="" owningSide="false" sourceTableName="passengers" targetEntity="LtineraryReservations" targetTableName="ltinerary_reservations" used="true"/>
+</table>
+<table catalog="flight_booking" databaseType="TABLE" javaBean="Payments" name="payments" schema="">
+<column dbAutoIncremented="true" dbComment="" dbDefaultValue="" dbName="payment_id" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="paymentId" javaType="java.lang.Integer" jdbcTypeCode="4" label="Payment id" notNull="true" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="payment_status_code" dbNotNull="false" dbPosition="2" dbSize="10" dbTypeName="INT" inputType="number" javaName="paymentStatusCode" javaType="java.lang.Integer" jdbcTypeCode="4" label="Payment status code" notNull="false" selected="true"/>
+<column dateType="DT" dbComment="" dbDefaultValue="" dbName="payment_date" dbNotNull="false" dbPosition="3" dbSize="19" dbTypeName="DATETIME" inputType="" javaName="paymentDate" javaType="java.util.Date" jdbcTypeCode="93" label="Payment date" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="payment_amount" dbNotNull="false" dbPosition="4" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="paymentAmount" javaType="java.lang.String" jdbcTypeCode="12" label="Payment amount" maxLength="255" notNull="false" selected="true"/>
+<link cardinality="ManyToMany" cascade="" fetch="DEFAULT" foreignKeyName="" id="LINK_JT_reservation_payments_I" inverseSideOf="LINK_JT_reservation_payments_O" javaName="listOfLtineraryReservations" javaType="java.util.List" joinTableName="reservation_payments" mappedBy="listOfPayments" optional="" owningSide="false" sourceTableName="payments" targetEntity="LtineraryReservations" targetTableName="ltinerary_reservations" used="true"/>
+</table>
+<table catalog="flight_booking" databaseType="TABLE" javaBean="RefCalendar" name="ref_calendar" schema="">
+<column dateType="DT" dbComment="" dbDefaultValue="" dbName="day_date" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="19" dbTypeName="DATETIME" inputType="" javaName="dayDate" javaType="java.util.Date" jdbcTypeCode="93" label="Day date" notNull="true" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="day_number" dbNotNull="false" dbPosition="2" dbSize="10" dbTypeName="INT" inputType="number" javaName="dayNumber" javaType="java.lang.Integer" jdbcTypeCode="4" label="Day number" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="business_day_yn" dbNotNull="false" dbPosition="3" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="businessDayYn" javaType="java.lang.String" jdbcTypeCode="12" label="Business day yn" maxLength="255" notNull="false" selected="true"/>
+<link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="fk_flight_costs_ref_calendar1" id="LINK_FK_fk_flight_costs_ref_calendar1_I" inverseSideOf="LINK_FK_fk_flight_costs_ref_calendar1_O" javaName="listOfFlightCosts" javaType="java.util.List" joinTableName="" mappedBy="refCalendar" optional="" owningSide="false" sourceTableName="ref_calendar" targetEntity="FlightCosts" targetTableName="flight_costs" used="true"/>
+</table>
+<table catalog="flight_booking" databaseType="TABLE" javaBean="ReservationPayments" name="reservation_payments" schema="">
+<column dbComment="" dbDefaultValue="" dbName="reservation_id" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="reservationId" javaType="java.lang.Integer" jdbcTypeCode="4" label="Reservation id" notNull="true" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="payment_id" dbNotNull="true" dbPosition="2" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="paymentId" javaType="java.lang.Integer" jdbcTypeCode="4" label="Payment id" notNull="true" selected="true"/>
+<fk name="fk_reservation_payments_ltinerary_reservations1">
+<fkcol colname="payment_id" colref="reservation_id" deferrable="7" deleterule="3" sequence="1" tablename="reservation_payments" tableref="ltinerary_reservations" updaterule="3"/>
+</fk>
+<fk name="fk_reservation_payments_payments">
+<fkcol colname="reservation_id" colref="payment_id" deferrable="7" deleterule="3" sequence="1" tablename="reservation_payments" tableref="payments" updaterule="3"/>
+</fk>
+</table>
+</tableList>
+</root>
